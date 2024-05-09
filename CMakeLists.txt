@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+# oatpp is a STATIC_LIBRARY. It does not explicitly export all symbols and requires CXX_VISIBILITY_PRESET=default
+# CMP0063 OLD is needed to disambiguate that our CXX_VISIBILITY_PRESET=hidden policy does not apply in this STATIC_LIBRARY
+cmake_policy(SET CMP0063 NEW)
 
 file(STRINGS "${CMAKE_CURRENT_LIST_DIR}/src/oatpp/core/base/Environment.hpp" OATPP_VERSION_MACRO REGEX "#define OATPP_VERSION \"[0-9]+.[0-9]+.[0-9]+\"$")
 string(REGEX REPLACE "#define OATPP_VERSION \"([0-9]+.[0-9]+.[0-9]+)\"$" "\\1" oatpp_VERSION "${OATPP_VERSION_MACRO}")
@@ -131,6 +134,8 @@ if(OATPP_BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
+dc_register_thirdparty_library(oatpp)
+dc_register_thirdparty_library(oatpp-test)
 
 include(cpack.cmake)
 

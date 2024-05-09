@@ -296,7 +296,7 @@ public:
   {}
 
   Void(Void&& other)
-    : type::ObjectWrapper<void, __class::Void>(std::move(other.getPtr()), other.getValueType())
+    : type::ObjectWrapper<void, __class::Void>(other.getPtr(), other.getValueType())
   {}
 
   template<typename T, typename C>
